@@ -32,6 +32,19 @@
         a.anonymous-link:hover {
             text-decoration: underline; /* เพิ่มเส้นใต้เมื่อเอาเมาส์ชี้ */
         }
+
+        .centered-text {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0, 0, 0, 0.5); /* ทำให้พื้นหลังโปร่งใส */
+            color: white;
+            padding: 10px;
+            font-size: 16px;
+            text-align: center;
+            width: 100%; /* ทำให้กว้างเท่ากับหน้าจอ */
+        }
     
     </style>
 
@@ -41,7 +54,7 @@
     
 </head>
 <body> 
-   <!--<h1 style="text-align: center; color: aqua; font-family: monospace;">This website was made by <a style="color: aqua;"  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayByb2xsIA%3D%3D"> Anonymous</a></h1> -->
+   <!-- ไม่ใช้ <h1 style="text-align: center; color: aqua; font-family: monospace;">This website was made by <a style="color: aqua;"  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayByb2xsIA%3D%3D"> Anonymous</a></h1> -->
 
   <button id="myButton" onclick="moveButton()" style="font-family: Mali;">คลิกตรงนี้</button>
   <h1 style="text-align: center; color: aqua; font-family: monospace;" id="text"></h1>
@@ -73,7 +86,7 @@
 
         var fullText = text; // เริ่มต้นด้วยข้อความที่ไม่มีลิงก์
         var index = 0;
-        var speed = 200; // ความเร็วในการแสดงผล (100 milliseconds)
+        var speed = 200; // ความเร็วในการแสดงผล (200 milliseconds)
 
         function typeWriter() {
             if (index < text.length) {
@@ -89,7 +102,24 @@
         // เริ่มฟังก์ชันพิมพ์เมื่อโหลดหน้าเว็บเสร็จ
         window.onload = typeWriter;
     
+    //------------------------------------------------------------
+    function getRandomRGBValue() {
+            return Math.floor(Math.random() * 256);  // สุ่มค่า 0 ถึง 255
+        }
+
+        function changeColor() {
+            const r = getRandomRGBValue();
+            const g = getRandomRGBValue();
+            const b = getRandomRGBValue();
+            const rgbColor = `rgb(${r}, ${g}, ${b})`;
+            document.getElementById('colorText').style.color = rgbColor;
+        }
+
+        setInterval(changeColor, 200);  // เปลี่ยนสีทุก 1 วินาที
+    
 </script>
+
+<div class="centered-text" id="colorText" style="font-family: monospace;color: white;">Copyright 2024 All Right Reserved By <a style="color: rgb(162, 199, 0);"  href="https://pittzaa.github.io/upwinnie2/">Pizza</a> </div>
 
 </body>
 </html>
