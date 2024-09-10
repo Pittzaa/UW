@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Button Move and Redirect</title>
+    <title>Intro</title>
     <style>
         #myButton {
             position: absolute;
@@ -21,7 +21,18 @@
             66.67%{background-color: rgb(43, 0, 71);}
             100%{background-color: black;}
         }
-     
+
+       
+        /* กำหนดสีของปุ่มลิงก์ */
+        a.anonymous-link {
+            color: aqua;
+            text-decoration: none; /* เอาเส้นใต้ของลิงก์ออก */
+        }
+
+        a.anonymous-link:hover {
+            text-decoration: underline; /* เพิ่มเส้นใต้เมื่อเอาเมาส์ชี้ */
+        }
+    
     </style>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +40,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Mali:ital,wght@0,700;1,200&display=swap" rel="stylesheet">
     
 </head>
-<body>
-    <h1 style="text-align: center; color: aqua; font-family: monospace;">This website was made by <a style="color: aqua;"  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayByb2xsIA%3D%3D"> Anonymous</a></h1>
+<body> 
+   <!--<h1 style="text-align: center; color: aqua; font-family: monospace;">This website was made by <a style="color: aqua;"  href="https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayByb2xsIA%3D%3D"> Anonymous</a></h1> -->
 
-<button id="myButton" onclick="moveButton()" style="font-family: Mali;">คลิกตรงนี้</button>
+  <button id="myButton" onclick="moveButton()" style="font-family: Mali;">คลิกตรงนี้</button>
+  <h1 style="text-align: center; color: aqua; font-family: monospace;" id="text"></h1>
 
 <script>
-    let clickCount = 0;
+    let clickCount = 0;{
 
     function moveButton() {
         clickCount++;
@@ -52,6 +64,31 @@
             window.location.href = 'https://pittzaa.github.io/upwinnie2/upandwinnie.html'; // เปลี่ยนเป็น URL ที่ต้องการ
         }
     }
+   }
+   
+      var text = "This website was made by ";
+    
+        var linkText = "Anonymous";
+        var link = "<a href='https://www.youtube.com/watch?v=dQw4w9WgXcQ&pp=ygUKcmljayByb2xsIA%3D%3D' class='anonymous-link' target='_blank'>" + linkText + "</a>";
+
+        var fullText = text; // เริ่มต้นด้วยข้อความที่ไม่มีลิงก์
+        var index = 0;
+        var speed = 200; // ความเร็วในการแสดงผล (100 milliseconds)
+
+        function typeWriter() {
+            if (index < text.length) {
+                document.getElementById("text").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeWriter, speed);
+            } else if (index === text.length) {
+                // เมื่อข้อความปกติพิมพ์จบ ให้เพิ่มลิงก์แทนคำว่า Anonymous
+                document.getElementById("text").innerHTML += link;
+            }
+        }
+
+        // เริ่มฟังก์ชันพิมพ์เมื่อโหลดหน้าเว็บเสร็จ
+        window.onload = typeWriter;
+    
 </script>
 
 </body>
