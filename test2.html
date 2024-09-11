@@ -1,0 +1,77 @@
+การเข้ารหัสด้วย SHA-256 แตกต่างจากการเข้ารหัสแบบ Base64 เนื่องจากเป็นการเข้ารหัสแบบ Hash ที่ไม่สามารถถอดรหัสกลับได้ ดังนั้นเราจะใช้ JavaScript และ crypto.subtle.digest() สำหรับการเข้ารหัส SHA-256 ในโค้ตของคุณแทนที่การเข้ารหัส Base64
+
+นี่คือการปรับปรุงโค้ตให้เข้ารหัสด้วย SHA-256:
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .error-message {
+            color: red;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <button type="submit">Submit</button>
+            <p id="errorMessage" class="error-message">Wrong password</p>
+        </form>
+    </div>
+
+    <script>
+        const encryptedPassword = "5a57a08891a91ed81ede3b9388df8f3e5d4a11598e2593525c6ecedabd91db23";
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
+
+        async function sha256(message) {
+            const msgBuffer = new TextEncoder().encode(message);          // แปลงข้อความเป็น buffer
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer); // เข้ารหัส SHA-256
+            const hashArray = Array.from(new Uint8Array(hashBuffer));      // แปลง buffer เป็น array ของตัวเลข
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join(''); // แปลงเป็น hex
+            return hashHex;
+        }
+
+        loginForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const password = document.getElementById('password').value;
+            const hashedInput = await sha256(password); // เข้ารหัส input ด้วย SHA-256
+
+            if (hashedInput === encryptedPassword) {
+                window.location.href = "upandwinnie.html"; // เปลี่ยน URL ที่คุณต้องการ redirect
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
+
+การปรับปรุง:
+
+เปลี่ยนการเข้ารหัสรหัสผ่านที่ผู้ใช้ใส่จาก Base64 เป็น SHA-256 ด้วย crypto.subtle.digest().
+
+เปลี่ยนการเปรียบเทียบรหัสผ่านให้เป็นการเปรียบเทียบรหัสที่ถูกเข้ารหัสในรูปแบบ SHA-256.
+
+
